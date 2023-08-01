@@ -1,31 +1,31 @@
-# Arrow-flight-physics
+This is a physics simulation library that can be used to simulate the motion of objects in 2D. The library includes classes for representing physical objects, such as balls, blocks, and springs. It also includes methods for calculating the forces acting on objects, such as gravity, friction, and air resistance. The library can be used to simulate a variety of physical phenomena, such as projectile motion, bouncing balls, and falling objects.
 
-Arrow flight physics
+To use the library, first create an instance of the Physic class. Then, you can set the mass, speed, acceleration, position, radius, color, state, and collision properties of the object. Once you have created the object, you can use the start_flight() method to simulate its motion. The start_flight() method takes three arguments: the speed of the object, the mass of the object, and the launch angle. The method returns a tuple containing the flight time, maximum height, distance traveled, and a list of x and y coordinates of the object's trajectory.
 
-This is a physics library that can be used to simulate the motion of objects. It includes classes for representing physical objects, such as balls and projectiles, as well as methods for calculating their motion.
+Here is an example of how to use the library to simulate the motion of a projectile:
 
-The library is written in Python and uses the NumPy library for numerical calculations. It is designed to be easy to use and understand, with a clean and well-documented API.
-
-To get started with the library, you can create a new object of the `Physic` class. This class represents a physical object and has properties such as mass, speed, acceleration, position, radius, color, state, and collision properties.
-
-You can then use the methods of the `Physic` class to calculate the motion of the object. For example, the `start_flight` method can be used to calculate the trajectory of a projectile.
-
-The following code snippet shows how to use the `Physic` class to calculate the trajectory of a projectile:
-
-```python
+```
 import physic
 
-ph = physic.Physic()
+# Create a Physic object
+object = physic.Physic()
 
-fl_time,mx_height,distance, trajectory_x, trajectory_y = ph.start_flight(10.0, 10.0, 45.0)
-# Output result values
-print(fl_time)
-print(mx_height)
+# Set the mass, speed, and launch angle of the object
+object.mass = 1.0
+object.speed = 10.0
+object.angle = 45.0
+
+# Start the simulation
+flight_time, max_height, distance, trajectory_x, trajectory_y = object.start_flight()
+
+# Print the results
+print(flight_time)
+print(max_height)
 print(distance)
 
-# Output trajectory points
+# Print the trajectory points
 for x, y in zip(trajectory_x, trajectory_y):
     print(f"x: {x:.2f}, y: {y:.2f}")
 ```
 
-This code will create a new object of the `Physic` class and then use the `start_flight` method to calculate the trajectory of a projectile that is launched with a speed of 10.0 meters per second and an angle of 45 degrees. The results of the calculation will be printed to the console.
+This code will create a Physic object and set its mass, speed, and launch angle. Then, it will start the simulation and print the results. The results will include the flight time, maximum height, distance traveled, and a list of x and y coordinates of the object's trajectory.
