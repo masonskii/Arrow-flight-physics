@@ -8,10 +8,10 @@ class Circle(Figure):
         self.add_dimension(radius)
 
     def perimeter(self):
-        return 2 * 3.14 * self.dimensions[0]
+        return 2 * np.pi * self.dimensions[0]
 
     def area(self):
-        return 3.14 * self.dimensions[0] ** 2
+        return np.pi * self.dimensions[0] ** 2
     
     def __str__(self):
         return f'Circle with radius {self.dimensions[0]}' 

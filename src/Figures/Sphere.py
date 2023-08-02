@@ -9,9 +9,9 @@ class Sphere(Figure):
         super().__init__()
         self.radius = radius
 
-    def calculate_area(self):
-        return 4 * 3.14 * self.radius ** 2
+    def area(self):
+        return 4 * np.pi * self.radius ** 2
 
-    def calculate_volume(self):
-        return (4 / 3) * 3.14 * self.radius ** 3
+    def volume(self):
+        return (4 / 3) * np.pi * self.radius ** 3
     
