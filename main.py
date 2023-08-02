@@ -1,13 +1,13 @@
 import sys
-from src.physic import Physic
+from src.ArrowFlying import ArrowFlying
  
 print(sys.version)
 
 
 
-ph = Physic()
+arrow = ArrowFlying()
 
-fl_time,mx_height,distance, trajectory_x, trajectory_y = ph.start_flight(10.0, 10.0, 45.0)
+fl_time, mx_height, distance, trajectory_x, trajectory_y = arrow.start_flight(70.0, 0.5, 80.0)
 # Output result values
 print(fl_time)
 print(mx_height)

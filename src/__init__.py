@@ -1,3 +1,3 @@
-from .physic import *
-
-__all__ = ["Physic","Color","ObjectState"]
+from .AbstractPhysic import AbstractPhysic
+from .ArrowFlying import ArrowFlying
+__all__ = ["AbstractPhysic","ArrowFlying"]
