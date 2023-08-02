@@ -3,11 +3,24 @@ import numpy as np
 from src.Figures.Line import Line, LineEnum
 from src.Enums.LineEnum import LineEnum
 from src.Enums.FigureEnum import FigureEnum
-
-
 class Figure:
-    def __init__(self) -> None:
-        self._a: np.float64 = np.float64(0.0)
-        self._S: np.float64 = np.float64(0.0)
-        self._v: np.float64 = np.float64(0.0)
-        self._r: np.float64 = np.float64(0.0)
+    def __init__(self):
+        self.sides = []
+        self.dimensions = []
+
+    def add_side(self, length):
+        self.sides.append(length)
+
+    def add_dimension(self, value):
+        self.dimensions.append(value)
+
+    def perimeter(self):
+        raise NotImplementedError("Subclasses of Figure should implement the 'perimeter' method.")
+
+    def area(self):
+        raise NotImplementedError("Subclasses of Figure should implement the 'area' method.")
+
+    def volume(self):
+        raise NotImplementedError("Subclasses of Figure should implement the 'volume' method.")
+
+    

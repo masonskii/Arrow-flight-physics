@@ -1,7 +1,7 @@
 import numpy as np
 from typing import Any, Union
-from src.AngleEnum import AngleEnum
-from src.ObjectState import ObjectState
+from src.Enums.AngleEnum import AngleEnum
+from src.Enums.ObjectState import ObjectState
 from src.Color import Color
 """
 This code defines a class named 'AbstractPhysic' that represents a physics object. The class contains private variables and their states, as well as setters and getters for each variable. 
