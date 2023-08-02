@@ -35,7 +35,7 @@ Note: The code assumes the existence of the Color and ObjectState classes, which
 """
 
 
-class AbstractPhysic:
+class Physic:
 
     def __init__(self) -> None:
 
