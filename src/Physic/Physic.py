@@ -36,9 +36,11 @@ Note: The code assumes the existence of the Color and ObjectState classes, which
 
 
 class Physic:
+    # Constants
+    g: np.float16 = np.float16(9.8)  # Acceleration due to gravity
 
     def __init__(self) -> None:
-
+        
         # private variables
         self._mass: np.float64 = np.float64(0.0)
         self._speed: np.float64 = np.float64(0.0)
@@ -270,3 +272,6 @@ class Physic:
             return value
         else:
             return np.float64(value)
+        
+    def calculate_velocity(self, mass: np.float64, force: np.float64) -> np.float64:
+        return np.sqrt((2 * force) / mass)
