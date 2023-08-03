@@ -59,5 +59,9 @@
     "editor.defaultFormatter": "ms-python.autopep8"
   },
   "python.formatting.provider": "none",
-  "workbench.colorTheme": "One Dark Pro"
+  "workbench.colorTheme": "One Dark Pro",
+  "cSpell.words": [
+    "pygame",
+    "USEREVENT"
+  ]
 }

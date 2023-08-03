@@ -22,7 +22,9 @@ import sys
 from src.Arrow import Arrow
 from src.Bow import Bow
 from src.Physic.Model import PhysicModel
-
+from src.Color import Color
+from ui.models.ui_main import Window
+from ui.settings import *
 print(sys.version)
 
 arrow = Arrow()
@@ -31,4 +33,7 @@ start_points = [0, 1]
 model = PhysicModel()
 model.shot(start_points[0], start_points[1], arrow=arrow, bow=bow)
 print(model.__str__())
-model.draw()
+# model.draw()
+window = Window(WIDTH, HEIGHT, "Window", Color(255,255,255), 60)
+window.draw_arrow(0, HEIGHT - 60, 50, 15, WIDTH - 100, HEIGHT - 60)
+window.run()
