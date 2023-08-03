@@ -4,28 +4,41 @@ To use the library, first create an instance of the Physic class. Then, you can 
 
 Here is an example of how to use the library to simulate the motion of a projectile:
 
-```
-import physic
+## Getting Started
 
-# Create a Physic object
-object = physic.Physic()
+To get started with the simulation, you will need to install the following dependencies:
 
-# Set the mass, speed, and launch angle of the object
-object.mass = 1.0
-object.speed = 10.0
-object.angle = 45.0
+* Python 3.6 or higher
+* NumPy
+* Matplotlib
 
-# Start the simulation
-flight_time, max_height, distance, trajectory_x, trajectory_y = object.start_flight()
+```py
+import sys
+from src.Arrow import Arrow
+from src.Bow import Bow
+from src.Physic.Model import PhysicModel
 
-# Print the results
-print(flight_time)
-print(max_height)
-print(distance)
+print(sys.version)
 
-# Print the trajectory points
-for x, y in zip(trajectory_x, trajectory_y):
-    print(f"x: {x:.2f}, y: {y:.2f}")
+arrow = Arrow()
+bow = Bow(45.0)
+start_points = [0, 1]
+model = PhysicModel()
+model.shot(start_points[0], start_points[1], arrow=arrow, bow=bow)
+print(model.__str__())
+model.draw()
 ```
 
 This code will create a Physic object and set its mass, speed, and launch angle. Then, it will start the simulation and print the results. The results will include the flight time, maximum height, distance traveled, and a list of x and y coordinates of the object's trajectory.
+
+## Physics Engine
+
+The physics engine in this simulation uses the following equations to simulate the motion of objects:
+
+* **Newton's Second Law:** The acceleration of an object is equal to the net force acting on the object divided by the mass of the object.
+* **Projectile Motion:** The motion of a projectile is governed by the equations of projectile motion.
+* **Hooke's Law:** The force exerted by a spring is proportional to the extension of the spring.
+
+## License
+
+The simulation is licensed under the MIT License.

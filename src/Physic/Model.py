@@ -1,10 +1,57 @@
+"""
+This code defines a class named 'PhysicModel' that simulates the trajectory of an arrow shot from a bow. The class inherits from the 'Physic' class and provides methods to calculate the trajectory, draw it in 2D or 3D, and check for collisions.
+
+Inputs:
+- x0: an integer representing the initial x position of the arrow
+- y0: an integer representing the initial y position of the arrow
+- arrow: an instance of the Arrow class representing the arrow to be shot
+- bow: an instance of the Bow class representing the bow used to shoot the arrow
+
+Methods:
+- __init__(): Initializes the 'PhysicModel' object with default values for state and trajectory.
+- state: A property that returns the current state of the arrow (flight time, maximum height, and distance traveled).
+- state.setter: A setter method to update the state of the arrow.
+- trajectory_x: A property that returns the x coordinates of the arrow's trajectory.
+- trajectory_x.setter: A setter method to update the x coordinates of the arrow's trajectory.
+- trajectory_y: A property that returns the y coordinates of the arrow's trajectory.
+- trajectory_y.setter: A setter method to update the y coordinates of the arrow's trajectory.
+- __str__(): Returns a string representation of the 'PhysicModel' object.
+- draw(): Draws the arrow's trajectory in 2D using matplotlib.
+- draw_3d(): Draws the arrow's trajectory in 3D using matplotlib.
+- shot(x0, y0, arrow, bow): Simulates the shot of the arrow from the bow and calculates the trajectory.
+- check_collision(y): Checks if the arrow has collided with the ground based on its y position.
+
+Note: The 'PhysicModel' class depends on the 'Arrow', 'Bow', and 'Physic' classes, which are imported from the 'src' module.
+
+"""
+
+
+"""
+A class representing a physical model of a system. It simulates the trajectory of an arrow shot from a bow, taking into account factors such as air resistance and gravity. The class provides methods for setting and getting the state of the system, drawing the trajectory in 2D and 3D, and checking for collisions.
+
+Methods:
+- __init__: initializes the object with default values for the state and trajectory lists
+- state: getter and setter for the state list
+- trajectory_x: getter and setter for the x-coordinates of the trajectory
+- trajectory_y: getter and setter for the y-coordinates of the trajectory
+- __str__: returns a string representation of the object's state
+- draw: plots the trajectory in 2D
+- draw_3d: plots the trajectory in 3D
+- shot: simulates the shot of an arrow from a bow and updates the state and trajectory lists
+- check_collision: checks if the arrow has collided with the ground
+
+Fields:
+- _state: a list representing the state of the system, with flight time, max height, and distance traveled
+- _trajectory_x: a list of x-coordinates of the trajectory
+- _trajectory_y: a list of y-coordinates of the trajectory
+"""
 import numpy as np
 import matplotlib.pyplot as plt
-
-
 from src.Arrow import Arrow
 from src.Bow import Bow
+
 from src.Physic.Physic import Physic
+
 class PhysicModel(Physic):
     def __init__(self) -> None:
         super().__init__()
