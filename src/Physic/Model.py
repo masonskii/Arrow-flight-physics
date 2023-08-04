@@ -45,6 +45,7 @@ Fields:
 - _trajectory_x: a list of x-coordinates of the trajectory
 - _trajectory_y: a list of y-coordinates of the trajectory
 """
+from typing import Any, Union
 import numpy as np
 import matplotlib.pyplot as plt
 from src.Arrow import Arrow
@@ -53,11 +54,44 @@ from src.Bow import Bow
 from src.Physic.Physic import Physic
 
 class PhysicModel(Physic):
-    def __init__(self) -> None:
+    def __init__(self,arrow: Arrow, bow: Bow) -> None:
         super().__init__()
         self._state: list = np.zeros(3).tolist()
         self._trajectory_x = []
         self._trajectory_y = []
+        self._time_step: np.float64 = np.float64(0.1)
+        self._arrow: Arrow = arrow
+        self._bow: Bow = bow
+        self.v = self.calculate_velocity(self.arrow.mass, self.bow.force)
+        self.angle = np.radians(self.bow.angle)
+        self.M = self.arrow.mass
+
+    @property
+    def arrow(self) -> Arrow:
+        return self._arrow
+    
+    @arrow.setter
+    def arrow(self, arrow: Arrow) -> None:
+        self._arrow = arrow
+
+    @property
+    def bow(self) -> Bow:
+        return self._bow
+    
+    @bow.setter
+    def bow(self, bow: Bow) -> None:
+        self._bow = bow
+    
+    
+    @property
+    def time_step(self) -> np.float64:
+        return self._time_step
+    
+    @time_step.setter
+    def time_step(self, time_step: np.float64) -> None:
+        if not isinstance(time_step, np.float64):
+            raise TypeError('Expected float')
+        self._time_step = time_step
 
     @property
     def state(self) -> list:
@@ -107,17 +141,10 @@ class PhysicModel(Physic):
         ax.set_zlabel('Z')
         plt.show()
 
-    def shot(self, x0: np.int64, y0: np.int64, arrow: Arrow, bow: Bow) -> None:
-        time_step: np.float64 = np.float64(0.00001)
-        
+    def shot(self,x0: np.float64, y0: np.float64) -> list[np.float64]:
         # Lists to store trajectory data
         self.trajectory_x.append(x0)
         self.trajectory_y.append(y0)
-
-        self.angle = np.radians(bow.angle)
-
-        self.v = self.calculate_velocity(arrow.mass, bow.force)
-        self.M = arrow.mass
 
         vx: np.float64 = self.v * np.cos(self.angle)
         vy:np.float64 = self.v * np.sin(self.angle)
@@ -126,32 +153,21 @@ class PhysicModel(Physic):
         y: np.float64 = y0
         while not self.check_collision(y):
 
-            # Calculate speed components
-            v = np.sqrt(vx ** 2 + vy ** 2)
-            dx = (arrow.air_resistance * vx * v) * time_step
-            dy = (vy * v - self.g) * time_step
+            dx = (self.arrow.air_resistance * vx * self.v) * self.time_step
+            dy = (vy * self.v - self.g) * self.time_step
 
             # Update position
             x += dx
             y += dy
 
             # Update speed
-            vx -= (arrow.air_resistance * vx * v) / vx * time_step
-            vy -= (self.g + (arrow.air_resistance * vy * v)) * time_step
+            vx -= (self.arrow.air_resistance * vx * self.v) / vx * self.time_step
+            vy -= (self.g + (self.arrow.air_resistance * vy * self.v)) * self.time_step
 
             # Append current position to trajectory lists
             self.trajectory_x.append(x)
             self.trajectory_y.append(y)
-            """
-            #TODO::  next step in the function 
-            if self.check_collision(y + vy):
-                # check next points
-                v = np.sqrt(vx ** 2 + vy ** 2)
-                dx = (arrow.air_resistance * vx * v) * time_step
-                dy = (vy * v - self.g) * time_step
-                self.trajectory_x.append(x + dx)
-                self.trajectory_y.append(y + dy)
-            """
+
 
         horizontal_speed: np.float64 = self.v * np.cos(self.angle)
         vertical_speed:  np.float64 = self.v * np.sin(self.angle)
@@ -160,7 +176,30 @@ class PhysicModel(Physic):
 
         self.state[1] = (np.power(vertical_speed, 2)) / (2 * self.g)
         self.state[2] = horizontal_speed * self.state[0]
-
+        
+    def shotr(self, x0: np.float64, y0: np.float64, vx, vy) -> list[np.float64]:
+        # Lists to store trajectory data
+        self.trajectory_x.append(x0)
+        self.trajectory_y.append(y0)     
+        if self.check_collision(y0):
+            return self.trajectory_x[-1], self.trajectory_y[-1]
+        
+        dx = (self.arrow.air_resistance * vx * self.v) * self.time_step
+        dy = (vy * self.v - self.g) * self.time_step
+        
+        # Update position
+        x0 += dx
+        y0 += dy
+        
+        # Update speed
+        vx -= (self.arrow.air_resistance * vx * self.v) / vx * self.time_step
+        vy -= (self.g + (self.arrow.air_resistance * vy * self.v)) * self.time_step
+        
+        # Append current position to trajectory lists
+        self.trajectory_x.append(x0)
+        self.trajectory_y.append(y0)
+        # Recursive call to continue the shot
+        return self.shotr(x0, y0, vx, vy)
     @staticmethod
     def check_collision(y: np.float64) -> bool:
         if y <= 0 :

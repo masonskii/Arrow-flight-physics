@@ -19,6 +19,7 @@ Additional aspects:
 """
 
 import sys
+import numpy as np
 from src.Arrow import Arrow
 from src.Bow import Bow
 from src.Physic.Model import PhysicModel
@@ -30,10 +31,11 @@ print(sys.version)
 arrow = Arrow()
 bow = Bow(45.0)
 start_points = [0, 1]
-model = PhysicModel()
-model.shot(start_points[0], start_points[1], arrow=arrow, bow=bow)
-print(model.__str__())
-# model.draw()
-window = Window(WIDTH, HEIGHT, "Window", Color(255,255,255), 60)
+model = PhysicModel(arrow, bow)
+model.shot(
+    start_points[0],
+    start_points[1],
+)
+window = Window(WIDTH, HEIGHT, "Window", Color(255,255,255),arrow,bow, 60)
 window.draw_arrow(0, HEIGHT - 60, 50, 15, WIDTH - 100, HEIGHT - 60)
 window.run()
